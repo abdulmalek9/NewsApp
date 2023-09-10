@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/widget/card_category.dart';
+import 'package:news_app/widget/categorys_listview.dart';
 
 class NewsHomeView extends StatelessWidget {
   const NewsHomeView({super.key});
@@ -23,11 +25,16 @@ class NewsHomeView extends StatelessWidget {
         ),
         titleTextStyle:
             const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Column(
-        children: [],
+      body: const Padding(
+        padding: EdgeInsets.only(left: 16, top: 8),
+        child: Column(
+          children: [
+            CategorysListView(),
+          ],
+        ),
       ),
     );
   }
