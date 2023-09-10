@@ -5,8 +5,30 @@ class NewsHomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Text("Hello world"),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "News",
+              style: TextStyle(color: Colors.black),
+            ),
+            Text(
+              "Cloud",
+              style: TextStyle(color: Colors.yellow),
+            )
+          ],
+        ),
+        titleTextStyle:
+            const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
+      body: Column(
+        children: [],
+      ),
     );
   }
 }
