@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/widget/card_category.dart';
+import 'package:news_app/widget/News_tile.dart';
 import 'package:news_app/widget/categorys_listview.dart';
 
 class NewsHomeView extends StatelessWidget {
@@ -33,6 +33,7 @@ class NewsHomeView extends StatelessWidget {
         child: Column(
           children: [
             CategorysListView(),
+            NewsTile(),
           ],
         ),
       ),
