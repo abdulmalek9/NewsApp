@@ -8,10 +8,16 @@ class NewsService {
 
   NewsService(this.dio);
 
-  getnews() async {
+  Future<Map<String, dynamic>> getNewsResponse() async {
     Response response = await dio.get(
         "https://newsapi.org/v2/top-headlines?country=eg&category=general&apikey=$apiKey");
     Map<String, dynamic> jsonData = response.data;
+
+    return jsonData;
+  }
+
+  Future<List<NewsItemModel>> getnews() async {
+    Map<String, dynamic> jsonData = await getNewsResponse();
     List<dynamic> articles = jsonData['articles'];
 
     List<NewsItemModel> articleList = [];
@@ -22,5 +28,6 @@ class NewsService {
           description: article['description']);
       articleList.add(newsItemModel);
     }
+    return articleList;
   }
 }
