@@ -1,20 +1,40 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app/models/news_item_model.dart';
+import 'package:news_app/services/news_service.dart';
 import 'package:news_app/widget/News_tile.dart';
 
-class NewsTileListView extends StatelessWidget {
+class NewsTileListView extends StatefulWidget {
   const NewsTileListView({
     super.key,
   });
 
   @override
+  State<NewsTileListView> createState() => _NewsTileListViewState();
+}
+
+class _NewsTileListViewState extends State<NewsTileListView> {
+  List<NewsItemModel> data = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getnews();
+  }
+
+  Future<void> getnews() async => data = await NewsService(Dio()).getnews();
+
+  @override
   Widget build(BuildContext context) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-        childCount: 5,
+        childCount: data.length,
         (context, index) {
-          return const Padding(
-            padding: EdgeInsets.only(right: 16.0, bottom: 8.0),
-            child: NewsTile(),
+          return Padding(
+            padding: const EdgeInsets.only(right: 16.0, bottom: 8.0),
+            child: NewsTile(
+              newsData: data[index],
+            ),
           );
         },
       ),

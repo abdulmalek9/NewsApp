@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/models/news_item_model.dart';
 
 class NewsTile extends StatelessWidget {
-  const NewsTile({super.key});
+  const NewsTile({super.key, required this.newsData});
+  final NewsItemModel newsData;
 
   @override
   Widget build(BuildContext context) {
@@ -9,18 +11,18 @@ class NewsTile extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(8),
-          child: Image.asset(
-            "assets/general.png",
+          child: Image.network(
+            newsData.image!,
             width: MediaQuery.of(context).size.width,
             height: 200,
             fit: BoxFit.cover,
           ),
         ),
-        const Text(
-          "Lorem ipsum sine dollar Lorem ipsum sine lkasmas dollar Lorem ipsum sine dollar Lorem ipsum sine dollar",
+        Text(
+          newsData.title,
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.w500,
             color: Colors.black,
             fontSize: 18,
@@ -29,11 +31,11 @@ class NewsTile extends StatelessWidget {
         const SizedBox(
           height: 8,
         ),
-        const Text(
-          "Lorem ipsum sine dollar Lorem ipsum sine lkasmas dollar Lorem ipsum sine dollar Lorem ipsum sine dollar",
+        Text(
+          newsData.description!,
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.grey,
             fontSize: 14,
           ),
