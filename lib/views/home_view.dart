@@ -39,7 +39,7 @@ class NewsHomeView extends StatelessWidget {
                 height: 20,
               ),
             ),
-            NewsListViewBuilder(),
+            NewsListViewBuilder(categoryName: "general"),
           ],
         ),
       ),

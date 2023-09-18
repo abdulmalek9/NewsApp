@@ -5,7 +5,8 @@ import 'package:news_app/widget/news_tile_listview.dart';
 import 'package:flutter/material.dart';
 
 class NewsListViewBuilder extends StatefulWidget {
-  const NewsListViewBuilder({super.key});
+  const NewsListViewBuilder({super.key, required this.categoryName});
+  final String categoryName;
 
   @override
   State<NewsListViewBuilder> createState() => _NewsListViewBuilderState();
@@ -17,7 +18,7 @@ class _NewsListViewBuilderState extends State<NewsListViewBuilder> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    future = NewsService(Dio()).getnews();
+    future = NewsService(Dio()).getnews(categoryName: widget.categoryName);
     setState(() {});
   }
 

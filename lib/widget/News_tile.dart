@@ -25,6 +25,9 @@ class NewsTile extends StatelessWidget {
                   ),
                 ),
         ),
+        const SizedBox(
+          height: 8,
+        ),
         Text(
           newsData.title,
           overflow: TextOverflow.ellipsis,
@@ -39,7 +42,7 @@ class NewsTile extends StatelessWidget {
           height: 8,
         ),
         Text(
-          newsData.description!,
+          newsData.description ?? "",
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
           style: const TextStyle(

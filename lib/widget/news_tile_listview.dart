@@ -1,7 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/models/news_item_model.dart';
-import 'package:news_app/services/news_service.dart';
+
 import 'package:news_app/widget/News_tile.dart';
 
 class NewsTileListViewe extends StatelessWidget {
