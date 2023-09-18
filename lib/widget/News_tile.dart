@@ -11,12 +11,19 @@ class NewsTile extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(8),
-          child: Image.network(
-            newsData.image!,
-            width: MediaQuery.of(context).size.width,
-            height: 200,
-            fit: BoxFit.cover,
-          ),
+          child: newsData.image != null
+              ? Image.network(
+                  newsData.image!,
+                  width: MediaQuery.of(context).size.width,
+                  height: 200,
+                  fit: BoxFit.cover,
+                )
+              : const SizedBox(
+                  height: 200,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
         ),
         Text(
           newsData.title,

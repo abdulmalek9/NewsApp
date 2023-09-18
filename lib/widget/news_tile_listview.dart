@@ -4,25 +4,9 @@ import 'package:news_app/models/news_item_model.dart';
 import 'package:news_app/services/news_service.dart';
 import 'package:news_app/widget/News_tile.dart';
 
-class NewsTileListView extends StatefulWidget {
-  const NewsTileListView({
-    super.key,
-  });
-
-  @override
-  State<NewsTileListView> createState() => _NewsTileListViewState();
-}
-
-class _NewsTileListViewState extends State<NewsTileListView> {
-  List<NewsItemModel> data = [];
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getnews();
-  }
-
-  Future<void> getnews() async => data = await NewsService(Dio()).getnews();
+class NewsTileListViewe extends StatelessWidget {
+  const NewsTileListViewe({super.key, required this.data});
+  final List<NewsItemModel> data;
 
   @override
   Widget build(BuildContext context) {
