@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   dio: ^5.3.2
   cached_network_image: ^3.2.3
+  webview_flutter: ^4.2.4
 
 dev_dependencies:
   flutter_test:

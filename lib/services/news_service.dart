@@ -27,7 +27,8 @@ class NewsService {
       NewsItemModel newsItemModel = NewsItemModel(
           image: article['urlToImage'],
           title: article['title'],
-          description: article['description']);
+          description: article['description'],
+          url: article['url']);
       articleList.add(newsItemModel);
     }
     return articleList;

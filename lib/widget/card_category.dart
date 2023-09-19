@@ -25,7 +25,6 @@ class CategoryCard extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.only(top: 12.0),
           decoration: BoxDecoration(
-            color: Colors.red,
             borderRadius: BorderRadius.circular(8),
             image: DecorationImage(
               alignment: const Alignment(1, -1),

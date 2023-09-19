@@ -42,7 +42,9 @@ class _NewsListViewBuilderState extends State<NewsListViewBuilder> {
             return const SliverFillRemaining(
               hasScrollBody: false,
               child: Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  color: Colors.black,
+                ),
               ),
             );
           }
