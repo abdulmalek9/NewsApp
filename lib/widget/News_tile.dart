@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/models/news_item_model.dart';
+import 'package:news_app/widget/image_builder.dart';
 
 class NewsTile extends StatelessWidget {
   const NewsTile({super.key, required this.newsData});
@@ -9,22 +10,7 @@ class NewsTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: newsData.image != null
-              ? Image.network(
-                  newsData.image!,
-                  width: MediaQuery.of(context).size.width,
-                  height: 200,
-                  fit: BoxFit.cover,
-                )
-              : const SizedBox(
-                  height: 200,
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
-        ),
+        ImageBuilder(newsData: newsData),
         const SizedBox(
           height: 8,
         ),

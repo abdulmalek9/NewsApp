@@ -18,22 +18,18 @@ class NewsService {
   }
 
   Future<List<NewsItemModel>> getnews({required String categoryName}) async {
-    try {
-      Map<String, dynamic> jsonData =
-          await getNewsResponse(categoryName: categoryName);
-      List<dynamic> articles = jsonData['articles'];
+    Map<String, dynamic> jsonData =
+        await getNewsResponse(categoryName: categoryName);
+    List<dynamic> articles = jsonData['articles'];
 
-      List<NewsItemModel> articleList = [];
-      for (var article in articles) {
-        NewsItemModel newsItemModel = NewsItemModel(
-            image: article['urlToImage'],
-            title: article['title'],
-            description: article['description']);
-        articleList.add(newsItemModel);
-      }
-      return articleList;
-    } catch (e) {
-      return [];
+    List<NewsItemModel> articleList = [];
+    for (var article in articles) {
+      NewsItemModel newsItemModel = NewsItemModel(
+          image: article['urlToImage'],
+          title: article['title'],
+          description: article['description']);
+      articleList.add(newsItemModel);
     }
+    return articleList;
   }
 }
