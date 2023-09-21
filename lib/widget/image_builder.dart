@@ -1,22 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:news_app/models/news_item_model.dart';
 
 class ImageBuilder extends StatelessWidget {
   const ImageBuilder({
     super.key,
-    required this.newsData,
+    required this.image,
   });
 
-  final NewsItemModel newsData;
+  final String? image;
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
-      child: newsData.image != null
+      child: image != null
           ? CachedNetworkImage(
-              imageUrl: newsData.image!,
+              imageUrl: image!,
               width: MediaQuery.of(context).size.width,
               height: 200,
               fit: BoxFit.cover,

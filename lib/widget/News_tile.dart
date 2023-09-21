@@ -19,7 +19,7 @@ class NewsTile extends StatelessWidget {
       },
       child: Column(
         children: [
-          ImageBuilder(newsData: newsData),
+          ImageBuilder(image: newsData.image),
           const SizedBox(
             height: 8,
           ),
