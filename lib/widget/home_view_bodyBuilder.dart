@@ -34,10 +34,13 @@ class HomeViewBodyBuilder extends StatelessWidget {
           ),
         ),
         isRefrshing == true
-            ? const SliverToBoxAdapter(
-                child: CircularProgressIndicator(
-                color: Colors.black,
-              ))
+            ? const SliverFillRemaining(
+                hasScrollBody: false,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.black,
+                  ),
+                ))
             : const NewsListViewBuilder(categoryName: "general"),
       ],
     );

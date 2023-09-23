@@ -47,12 +47,13 @@ class NewsHomeView extends StatelessWidget {
           springAnimationDurationInMilliseconds: 750,
           height: 80,
           animSpeedFactor: 4.0,
+          showChildOpacityTransition: false,
           color: Colors.amber,
           onRefresh: () async {
             setState(() {
               isRefreshing = true;
             });
-            await Future.delayed(const Duration(seconds: 2));
+            await Future.delayed(const Duration(seconds: 1));
             setState(() {
               isRefreshing = false;
               isSearching = false;

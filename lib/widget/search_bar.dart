@@ -20,7 +20,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
     return Padding(
       padding: const EdgeInsets.only(right: 16, bottom: 16),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 18),
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 4),
         decoration: const BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -38,6 +38,17 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
         child: TextField(
           onChanged: (value) {
             searchValue = value;
+          },
+          onSubmitted: (value) {
+            searchValue = value;
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return SearchResultView(searchValue: searchValue!);
+                },
+              ),
+            );
           },
           decoration: InputDecoration(
             suffixIcon: IconButton(
