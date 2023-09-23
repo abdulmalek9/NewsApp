@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/widget/categorys_listview.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:news_app/widget/home_view_bodyBuilder.dart';
-import 'package:news_app/widget/news_list_builder.dart';
-import 'package:news_app/widget/search_bar.dart';
 
 class NewsHomeView extends StatelessWidget {
   const NewsHomeView({super.key});
@@ -10,6 +8,7 @@ class NewsHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isSearching = false;
+    bool isRefreshing = false;
     return StatefulBuilder(
       builder: (context, setState) => Scaffold(
         appBar: AppBar(
@@ -39,15 +38,33 @@ class NewsHomeView extends StatelessWidget {
               ),
               onPressed: () {
                 isSearching = !isSearching;
-                print("isSearching = $isSearching");
                 setState(() {});
               },
             ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.only(left: 16, top: 8),
-          child: HomeViewBodyBuilder(isSearching: isSearching),
+        body: LiquidPullToRefresh(
+          springAnimationDurationInMilliseconds: 750,
+          height: 80,
+          animSpeedFactor: 4.0,
+          color: Colors.amber,
+          onRefresh: () async {
+            setState(() {
+              isRefreshing = true;
+            });
+            await Future.delayed(const Duration(seconds: 2));
+            setState(() {
+              isRefreshing = false;
+              isSearching = false;
+            });
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(left: 16, top: 8),
+            child: HomeViewBodyBuilder(
+              isSearching: isSearching,
+              isRefrshing: isRefreshing,
+            ),
+          ),
         ),
       ),
     );

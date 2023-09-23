@@ -14,6 +14,10 @@ class NewsListViewBuilder extends StatefulWidget {
 }
 
 class _NewsListViewBuilderState extends State<NewsListViewBuilder> {
+  Future getNewsList() async {
+    future = NewsService(Dio()).getnews(categoryName: widget.categoryName);
+  }
+
   dynamic future;
   @override
   void initState() {

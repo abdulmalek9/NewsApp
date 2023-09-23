@@ -7,9 +7,11 @@ class HomeViewBodyBuilder extends StatelessWidget {
   const HomeViewBodyBuilder({
     super.key,
     required this.isSearching,
+    required this.isRefrshing,
   });
 
   final bool isSearching;
+  final bool isRefrshing;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,12 @@ class HomeViewBodyBuilder extends StatelessWidget {
             height: 20,
           ),
         ),
-        const NewsListViewBuilder(categoryName: "general"),
+        isRefrshing == true
+            ? const SliverToBoxAdapter(
+                child: CircularProgressIndicator(
+                color: Colors.black,
+              ))
+            : const NewsListViewBuilder(categoryName: "general"),
       ],
     );
   }
