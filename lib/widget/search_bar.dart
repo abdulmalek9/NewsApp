@@ -11,16 +11,17 @@ class CustomSearchBar extends StatefulWidget {
 }
 
 class _CustomSearchBarState extends State<CustomSearchBar> {
-  String? searchValue;
+  String searchValue = '';
   NewsService? newsService;
   List<NewsItemModel>? data;
+  Color? color = Colors.grey;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 16, bottom: 16),
+      padding: const EdgeInsets.only(right: 13, bottom: 16),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 4),
+        padding: const EdgeInsets.only(top: 4, bottom: 4, left: 18, right: 5),
         decoration: const BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -36,36 +37,45 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
         width: MediaQuery.of(context).size.width,
         height: 50,
         child: TextField(
+          onTapOutside: (event) {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus &&
+                currentFocus.focusedChild != null) {
+              FocusManager.instance.primaryFocus?.unfocus();
+            }
+          },
           onChanged: (value) {
             searchValue = value;
+            setState(() {});
           },
           onSubmitted: (value) {
             searchValue = value;
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return SearchResultView(searchValue: searchValue!);
-                },
-              ),
-            );
+            valditionValue(context);
           },
           decoration: InputDecoration(
-            suffixIcon: IconButton(
-              padding: const EdgeInsets.only(left: 16),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return SearchResultView(searchValue: searchValue!);
-                    },
+            suffixIcon: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  padding: const EdgeInsets.only(left: 16),
+                  onPressed: () {
+                    valditionValue(context);
+                  },
+                  icon: Icon(
+                    Icons.search,
+                    color: searchValue.isEmpty ? color : Colors.grey,
                   ),
-                );
-              },
-              icon: const Icon(
-                Icons.search,
-              ),
+                ),
+                IconButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: () {},
+                  icon: const Icon(Icons.filter_list),
+                  color: Colors.grey,
+                ),
+                const SizedBox(
+                  width: 4,
+                ),
+              ],
             ),
             border: InputBorder.none,
             hintText: "Search..",
@@ -77,5 +87,22 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
         ),
       ),
     );
+  }
+
+  void valditionValue(BuildContext context) {
+    if (searchValue.isEmpty) {
+      setState(() {
+        color = searchValue.isEmpty ? Colors.red : Colors.grey;
+      });
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return SearchResultView(searchValue: searchValue);
+          },
+        ),
+      );
+    }
   }
 }

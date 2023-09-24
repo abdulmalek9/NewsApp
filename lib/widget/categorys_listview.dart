@@ -14,7 +14,7 @@ class CategorysListView extends StatelessWidget {
     CategoryModel(image: "assets/science.png", name: "Science"),
     CategoryModel(image: "assets/sports.png", name: "Sports"),
     CategoryModel(image: "assets/technology.png", name: "Technology"),
-    CategoryModel(image: "assets/general.png", name: "General"),
+    CategoryModel(image: "assets/general.png", name: "Top"),
   ];
 
   @override

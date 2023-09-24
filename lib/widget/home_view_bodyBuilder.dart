@@ -18,7 +18,7 @@ class HomeViewBodyBuilder extends StatelessWidget {
     return CustomScrollView(
       physics: const BouncingScrollPhysics(),
       slivers: [
-        isSearching == true
+        isSearching != true
             ? const SliverToBoxAdapter(
                 child: CustomSearchBar(),
               )
@@ -41,7 +41,7 @@ class HomeViewBodyBuilder extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ))
-            : const NewsListViewBuilder(categoryName: "general"),
+            : const NewsListViewBuilder(categoryName: "Top"),
       ],
     );
   }
