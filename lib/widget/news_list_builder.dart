@@ -3,6 +3,7 @@ import 'package:news_app/models/news_item_model.dart';
 import 'package:news_app/services/news_service.dart';
 import 'package:news_app/widget/news_tile_listview.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app/widget/shimmer_widget.dart';
 
 class NewsListViewBuilder extends StatefulWidget {
   const NewsListViewBuilder({super.key, this.categoryName, this.searchValue});
@@ -50,11 +51,7 @@ class _NewsListViewBuilderState extends State<NewsListViewBuilder> {
           } else {
             return const SliverFillRemaining(
               hasScrollBody: false,
-              child: Center(
-                child: CircularProgressIndicator(
-                  color: Colors.black,
-                ),
-              ),
+              child: ShimmerLoading(),
             );
           }
         });

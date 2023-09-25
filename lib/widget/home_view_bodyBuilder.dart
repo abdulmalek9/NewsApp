@@ -40,7 +40,8 @@ class HomeViewBodyBuilder extends StatelessWidget {
                   child: CircularProgressIndicator(
                     color: Colors.black,
                   ),
-                ))
+                ),
+              )
             : const NewsListViewBuilder(categoryName: "Top"),
       ],
     );
