@@ -27,13 +27,13 @@ class CategoryCard extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             image: DecorationImage(
-              alignment: const Alignment(1, -1),
+              // alignment: const Alignment(1, 1),
               fit: BoxFit.fitWidth,
               image: AssetImage(categoryData.image),
             ),
           ),
-          width: 220,
-          height: 120,
+          width: 180,
+          height: 100,
           child: Center(
             child: Text(
               categoryData.name,
