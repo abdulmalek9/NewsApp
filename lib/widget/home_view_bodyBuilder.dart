@@ -18,7 +18,7 @@ class HomeViewBodyBuilder extends StatelessWidget {
     return CustomScrollView(
       physics: const BouncingScrollPhysics(),
       slivers: [
-        isSearching != true
+        isSearching == true
             ? const SliverToBoxAdapter(
                 child: CustomSearchBar(),
               )

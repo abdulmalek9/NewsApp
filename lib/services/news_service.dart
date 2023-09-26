@@ -18,24 +18,32 @@ class NewsService {
   }
 
   Future<Map<String, dynamic>> getSearchNewsResponse(
-      {required String searchValue}) async {
-    Response response = await dio.get(
-        "https://newsdata.io/api/1/news?apikey=$apiKey&q=$searchValue&image=1");
-    Map<String, dynamic> jsonData = response.data;
+      {required String searchValue, required String filterValue}) async {
+    Map<String, dynamic> jsonData;
+    if (filterValue != "T") {
+      Response response = await dio.get(
+          "https://newsdata.io/api/1/news?apikey=$apiKey&category=$filterValue&q=$searchValue&image=1");
+      jsonData = response.data;
+    } else {
+      Response response = await dio.get(
+          "https://newsdata.io/api/1/news?apikey=$apiKey&q=$searchValue&image=1");
+
+      jsonData = response.data;
+    }
 
     return jsonData;
   }
 
   Future<List<NewsItemModel>> getnews(
-      {String? categoryName, String? searchValue}) async {
+      {String? categoryName, String? searchValue, String? filterValue}) async {
     List<dynamic> articles;
     if (categoryName != null) {
       Map<String, dynamic> jsonData =
           await getNewsResponse(categoryName: categoryName);
       articles = jsonData['results'];
     } else {
-      Map<String, dynamic> jsonData =
-          await getSearchNewsResponse(searchValue: searchValue!);
+      Map<String, dynamic> jsonData = await getSearchNewsResponse(
+          searchValue: searchValue!, filterValue: filterValue!);
       articles = jsonData['results'];
     }
 

@@ -15,6 +15,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
   NewsService? newsService;
   List<NewsItemModel>? data;
   Color? color = Colors.grey;
+  String filterValue = "";
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
           },
           onSubmitted: (value) {
             searchValue = value;
-            valditionValue(context);
+            valditionValue(context, filterValue);
           },
           decoration: InputDecoration(
             suffixIcon: Row(
@@ -59,18 +60,77 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                 IconButton(
                   padding: const EdgeInsets.only(left: 16),
                   onPressed: () {
-                    valditionValue(context);
+                    valditionValue(context, filterValue);
                   },
                   icon: Icon(
                     Icons.search,
                     color: searchValue.isEmpty ? color : Colors.grey,
                   ),
                 ),
-                IconButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () {},
-                  icon: const Icon(Icons.filter_list),
-                  color: Colors.grey,
+                PopupMenuButton(
+                  itemBuilder: (context) => [
+                    const PopupMenuItem(
+                      child: CustomPopItem(
+                        itemIcon: Icons.trending_up,
+                        itemName: "Top",
+                      ),
+                    ),
+                    const PopupMenuItem(
+                      value: "Business",
+                      child: CustomPopItem(
+                        itemIcon: Icons.business_center,
+                        itemName: "Business",
+                      ),
+                    ),
+                    const PopupMenuItem(
+                      value: "Sports",
+                      child: CustomPopItem(
+                        itemIcon: Icons.sports_soccer,
+                        itemName: "Sports",
+                      ),
+                    ),
+                    const PopupMenuItem(
+                      value: "Entertainment",
+                      child: CustomPopItem(
+                        itemIcon: Icons.live_tv,
+                        itemName: "Entertainment",
+                      ),
+                    ),
+                    const PopupMenuItem(
+                      value: "Health",
+                      child: CustomPopItem(
+                        itemIcon: Icons.health_and_safety,
+                        itemName: "Health",
+                      ),
+                    ),
+                    const PopupMenuItem(
+                      value: "Science",
+                      child: CustomPopItem(
+                        itemIcon: Icons.science,
+                        itemName: "Science",
+                      ),
+                    ),
+                    const PopupMenuItem(
+                      value: "Technology",
+                      child: CustomPopItem(
+                        itemIcon: Icons.phone_android,
+                        itemName: "Technology",
+                      ),
+                    ),
+                  ],
+                  onSelected: (valueSelected) {
+                    setState(() {
+                      filterValue = valueSelected;
+                      print("onselecter ==== $filterValue");
+                    });
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                    child: Icon(
+                      Icons.filter_list,
+                      color: Colors.grey,
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   width: 4,
@@ -89,20 +149,48 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
     );
   }
 
-  void valditionValue(BuildContext context) {
+  void valditionValue(BuildContext context, String filterValue) {
     if (searchValue.isEmpty) {
       setState(() {
         color = searchValue.isEmpty ? Colors.red : Colors.grey;
       });
     } else {
+      print("search filter ====== $filterValue");
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) {
-            return SearchResultView(searchValue: searchValue);
+            return SearchResultView(
+              searchValue: searchValue,
+              filterValue: filterValue.isEmpty ? "T" : filterValue,
+            );
           },
         ),
       );
     }
+  }
+}
+
+class CustomPopItem extends StatelessWidget {
+  const CustomPopItem({
+    super.key,
+    required this.itemName,
+    required this.itemIcon,
+  });
+  final String itemName;
+  final IconData itemIcon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(itemIcon),
+        const SizedBox(
+          width: 12,
+        ),
+        Text(itemName),
+      ],
+    );
   }
 }

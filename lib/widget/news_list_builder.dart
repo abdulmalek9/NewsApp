@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:news_app/widget/shimmer_widget.dart';
 
 class NewsListViewBuilder extends StatefulWidget {
-  const NewsListViewBuilder({super.key, this.categoryName, this.searchValue});
+  const NewsListViewBuilder(
+      {super.key, this.categoryName, this.searchValue, this.filterValue});
   final String? categoryName;
   final String? searchValue;
+  final String? filterValue;
 
   @override
   State<NewsListViewBuilder> createState() => _NewsListViewBuilderState();
@@ -27,7 +29,8 @@ class _NewsListViewBuilderState extends State<NewsListViewBuilder> {
     if (widget.categoryName != null) {
       future = NewsService(Dio()).getnews(categoryName: widget.categoryName);
     } else {
-      future = NewsService(Dio()).getnews(searchValue: widget.searchValue);
+      future = NewsService(Dio()).getnews(
+          searchValue: widget.searchValue, filterValue: widget.filterValue);
     }
     setState(() {});
   }
