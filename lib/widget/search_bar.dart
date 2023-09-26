@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:news_app/models/news_item_model.dart';
 import 'package:news_app/services/news_service.dart';
 import 'package:news_app/views/search_result_view.dart';
+import 'package:news_app/widget/custom_pop_item.dart';
 
 class CustomSearchBar extends StatefulWidget {
   const CustomSearchBar({super.key});
@@ -67,71 +68,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                     color: searchValue.isEmpty ? color : Colors.grey,
                   ),
                 ),
-                PopupMenuButton(
-                  itemBuilder: (context) => [
-                    const PopupMenuItem(
-                      child: CustomPopItem(
-                        itemIcon: Icons.trending_up,
-                        itemName: "Top",
-                      ),
-                    ),
-                    const PopupMenuItem(
-                      value: "Business",
-                      child: CustomPopItem(
-                        itemIcon: Icons.business_center,
-                        itemName: "Business",
-                      ),
-                    ),
-                    const PopupMenuItem(
-                      value: "Sports",
-                      child: CustomPopItem(
-                        itemIcon: Icons.sports_soccer,
-                        itemName: "Sports",
-                      ),
-                    ),
-                    const PopupMenuItem(
-                      value: "Entertainment",
-                      child: CustomPopItem(
-                        itemIcon: Icons.live_tv,
-                        itemName: "Entertainment",
-                      ),
-                    ),
-                    const PopupMenuItem(
-                      value: "Health",
-                      child: CustomPopItem(
-                        itemIcon: Icons.health_and_safety,
-                        itemName: "Health",
-                      ),
-                    ),
-                    const PopupMenuItem(
-                      value: "Science",
-                      child: CustomPopItem(
-                        itemIcon: Icons.science,
-                        itemName: "Science",
-                      ),
-                    ),
-                    const PopupMenuItem(
-                      value: "Technology",
-                      child: CustomPopItem(
-                        itemIcon: Icons.phone_android,
-                        itemName: "Technology",
-                      ),
-                    ),
-                  ],
-                  onSelected: (valueSelected) {
-                    setState(() {
-                      filterValue = valueSelected;
-                      print("onselecter ==== $filterValue");
-                    });
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                    child: Icon(
-                      Icons.filter_list,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
+                PopUpMenuBuilder(context),
                 const SizedBox(
                   width: 4,
                 ),
@@ -144,6 +81,74 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
               fontSize: 16,
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  PopupMenuButton<dynamic> PopUpMenuBuilder(BuildContext context) {
+    return PopupMenuButton(
+      itemBuilder: (context) => [
+        const PopupMenuItem(
+          child: CustomPopItem(
+            itemIcon: Icons.trending_up,
+            itemName: "Top",
+          ),
+        ),
+        const PopupMenuItem(
+          value: "Business",
+          child: CustomPopItem(
+            itemIcon: Icons.business_center,
+            itemName: "Business",
+          ),
+        ),
+        const PopupMenuItem(
+          value: "Sports",
+          child: CustomPopItem(
+            itemIcon: Icons.sports_soccer,
+            itemName: "Sports",
+          ),
+        ),
+        const PopupMenuItem(
+          value: "Entertainment",
+          child: CustomPopItem(
+            itemIcon: Icons.live_tv,
+            itemName: "Entertainment",
+          ),
+        ),
+        const PopupMenuItem(
+          value: "Health",
+          child: CustomPopItem(
+            itemIcon: Icons.health_and_safety,
+            itemName: "Health",
+          ),
+        ),
+        const PopupMenuItem(
+          value: "Science",
+          child: CustomPopItem(
+            itemIcon: Icons.science,
+            itemName: "Science",
+          ),
+        ),
+        const PopupMenuItem(
+          value: "Technology",
+          child: CustomPopItem(
+            itemIcon: Icons.phone_android,
+            itemName: "Technology",
+          ),
+        ),
+      ],
+      onSelected: (valueSelected) {
+        setState(() {
+          filterValue = valueSelected;
+          print("onselecter ==== $filterValue");
+        });
+      },
+      child: const Padding(
+        padding: EdgeInsets.only(left: 8.0, right: 8.0),
+        child: Icon(
+          Icons.filter_list,
+          color: Colors.grey,
         ),
       ),
     );
@@ -168,29 +173,5 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
         ),
       );
     }
-  }
-}
-
-class CustomPopItem extends StatelessWidget {
-  const CustomPopItem({
-    super.key,
-    required this.itemName,
-    required this.itemIcon,
-  });
-  final String itemName;
-  final IconData itemIcon;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(itemIcon),
-        const SizedBox(
-          width: 12,
-        ),
-        Text(itemName),
-      ],
-    );
   }
 }
