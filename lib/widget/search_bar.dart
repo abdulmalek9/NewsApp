@@ -11,74 +11,95 @@ class CustomSearchBar extends StatefulWidget {
   State<CustomSearchBar> createState() => _CustomSearchBarState();
 }
 
-class _CustomSearchBarState extends State<CustomSearchBar> {
+class _CustomSearchBarState extends State<CustomSearchBar>
+    with TickerProviderStateMixin {
+  AnimationController? animation;
+  late Animation<double> _fadeInFadeOut;
+
+  @override
+  void initState() {
+    super.initState();
+    animation = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+    _fadeInFadeOut = Tween<double>(begin: 0.0, end: 1.0).animate(animation!);
+    animation!.forward();
+  }
+
   String searchValue = '';
   NewsService? newsService;
   List<NewsItemModel>? data;
   Color? color = Colors.grey;
+  String? filterIconColor;
   String filterValue = "";
+  bool visible = true;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 13, bottom: 16),
-      child: Container(
-        padding: const EdgeInsets.only(top: 4, bottom: 4, left: 18, right: 5),
-        decoration: const BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(1.8, 3.3),
-              color: Colors.black38,
-              blurRadius: 4,
-              spreadRadius: 0.1,
-            ),
-          ],
-          borderRadius: BorderRadius.all(Radius.circular(14)),
-          color: Colors.white,
-        ),
-        width: MediaQuery.of(context).size.width,
-        height: 50,
-        child: TextField(
-          onTapOutside: (event) {
-            FocusScopeNode currentFocus = FocusScope.of(context);
-            if (!currentFocus.hasPrimaryFocus &&
-                currentFocus.focusedChild != null) {
-              FocusManager.instance.primaryFocus?.unfocus();
-            }
-          },
-          onChanged: (value) {
-            searchValue = value;
-            setState(() {});
-          },
-          onSubmitted: (value) {
-            searchValue = value;
-            valditionValue(context, filterValue);
-          },
-          decoration: InputDecoration(
-            suffixIcon: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  padding: const EdgeInsets.only(left: 16),
-                  onPressed: () {
-                    valditionValue(context, filterValue);
-                  },
-                  icon: Icon(
-                    Icons.search,
-                    color: searchValue.isEmpty ? color : Colors.grey,
+      child: FadeTransition(
+        opacity: _fadeInFadeOut,
+        child: Container(
+          padding: const EdgeInsets.only(top: 4, bottom: 4, left: 18, right: 5),
+          decoration: const BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                offset: Offset(1.8, 3.3),
+                color: Colors.black38,
+                blurRadius: 4,
+                spreadRadius: 0.1,
+              ),
+            ],
+            borderRadius: BorderRadius.all(Radius.circular(14)),
+            color: Colors.white,
+          ),
+          width: MediaQuery.of(context).size.width,
+          height: 50,
+          child: TextField(
+            onTapOutside: (event) {
+              FocusScopeNode currentFocus = FocusScope.of(context);
+              if (!currentFocus.hasPrimaryFocus &&
+                  currentFocus.focusedChild != null) {
+                FocusManager.instance.primaryFocus?.unfocus();
+              }
+            },
+            onChanged: (value) {
+              searchValue = value;
+              setState(() {});
+            },
+            onSubmitted: (value) {
+              searchValue = value;
+              valditionValue(context, filterValue);
+            },
+            decoration: InputDecoration(
+              suffixIcon: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    padding: const EdgeInsets.only(left: 16),
+                    onPressed: () {
+                      valditionValue(context, filterValue);
+                    },
+                    icon: Icon(
+                      Icons.search,
+                      color: searchValue.isEmpty ? color : Colors.grey,
+                    ),
                   ),
-                ),
-                PopUpMenuBuilder(context),
-                const SizedBox(
-                  width: 4,
-                ),
-              ],
-            ),
-            border: InputBorder.none,
-            hintText: "Search..",
-            hintStyle: const TextStyle(
-              color: Colors.black45,
-              fontSize: 16,
+                  PopUpMenuBuilder(context),
+                  const SizedBox(
+                    width: 4,
+                  ),
+                ],
+              ),
+              border: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              hintText: "Search..",
+              hintStyle: const TextStyle(
+                color: Colors.black45,
+                fontSize: 16,
+              ),
             ),
           ),
         ),
@@ -89,50 +110,58 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
   PopupMenuButton<dynamic> PopUpMenuBuilder(BuildContext context) {
     return PopupMenuButton(
       itemBuilder: (context) => [
-        const PopupMenuItem(
+        PopupMenuItem(
+          value: "Top",
           child: CustomPopItem(
+            color: filterValue == "Top" ? Colors.amber : Colors.grey,
             itemIcon: Icons.trending_up,
             itemName: "Top",
           ),
         ),
-        const PopupMenuItem(
+        PopupMenuItem(
           value: "Business",
           child: CustomPopItem(
+            color: filterValue == "Business" ? Colors.amber : Colors.grey,
             itemIcon: Icons.business_center,
             itemName: "Business",
           ),
         ),
-        const PopupMenuItem(
+        PopupMenuItem(
           value: "Sports",
           child: CustomPopItem(
+            color: filterValue == "Sports" ? Colors.amber : Colors.grey,
             itemIcon: Icons.sports_soccer,
             itemName: "Sports",
           ),
         ),
-        const PopupMenuItem(
+        PopupMenuItem(
           value: "Entertainment",
           child: CustomPopItem(
+            color: filterValue == "Entertainment" ? Colors.amber : Colors.grey,
             itemIcon: Icons.live_tv,
             itemName: "Entertainment",
           ),
         ),
-        const PopupMenuItem(
+        PopupMenuItem(
           value: "Health",
           child: CustomPopItem(
+            color: filterValue == "Health" ? Colors.amber : Colors.grey,
             itemIcon: Icons.health_and_safety,
             itemName: "Health",
           ),
         ),
-        const PopupMenuItem(
+        PopupMenuItem(
           value: "Science",
           child: CustomPopItem(
+            color: filterValue == "Science" ? Colors.amber : Colors.grey,
             itemIcon: Icons.science,
             itemName: "Science",
           ),
         ),
-        const PopupMenuItem(
+        PopupMenuItem(
           value: "Technology",
           child: CustomPopItem(
+            color: filterValue == "Technology" ? Colors.amber : Colors.grey,
             itemIcon: Icons.phone_android,
             itemName: "Technology",
           ),
@@ -141,14 +170,13 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
       onSelected: (valueSelected) {
         setState(() {
           filterValue = valueSelected;
-          print("onselecter ==== $filterValue");
         });
       },
-      child: const Padding(
-        padding: EdgeInsets.only(left: 8.0, right: 8.0),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
         child: Icon(
           Icons.filter_list,
-          color: Colors.grey,
+          color: filterValue.isNotEmpty ? Colors.amber : Colors.grey,
         ),
       ),
     );
@@ -160,7 +188,6 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
         color = searchValue.isEmpty ? Colors.red : Colors.grey;
       });
     } else {
-      print("search filter ====== $filterValue");
       Navigator.push(
         context,
         MaterialPageRoute(

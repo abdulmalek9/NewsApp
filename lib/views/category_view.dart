@@ -37,19 +37,22 @@ class _CategoryViewState extends State<CategoryView> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 16, top: 16),
-        child: CustomScrollView(slivers: [
+        child: Stack(children: [
+          CustomScrollView(slivers: [
+            NewsListViewBuilder(
+              categoryName: widget.categoryName,
+            ),
+          ]),
           isSearching == true
-              ? const SliverToBoxAdapter(
+              ? const Positioned(
+                  left: 0,
+                  right: 0,
+                  top: 0,
                   child: CustomSearchBar(),
                 )
-              : const SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 4,
-                  ),
+              : const SizedBox(
+                  height: 8,
                 ),
-          NewsListViewBuilder(
-            categoryName: widget.categoryName,
-          ),
         ]),
       ),
     );

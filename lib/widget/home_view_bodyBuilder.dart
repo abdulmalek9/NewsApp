@@ -15,35 +15,47 @@ class HomeViewBodyBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      physics: const BouncingScrollPhysics(),
-      slivers: [
-        isSearching == true
-            ? const SliverToBoxAdapter(
-                child: CustomSearchBar(),
-              )
-            : const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 8,
-                ),
-              ),
-        const SliverToBoxAdapter(child: CategorysListView()),
-        const SliverToBoxAdapter(
-          child: SizedBox(
-            height: 20,
-          ),
-        ),
-        isRefrshing == true
-            ? const SliverFillRemaining(
-                hasScrollBody: false,
-                child: Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.black,
+    return Stack(children: [
+      CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        slivers: [
+          isSearching
+              ? const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 16,
                   ),
+                )
+              : const SliverToBoxAdapter(
+                  child: SizedBox(),
                 ),
-              )
-            : const NewsListViewBuilder(categoryName: "Top"),
-      ],
-    );
+          const SliverToBoxAdapter(child: CategorysListView()),
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 20,
+            ),
+          ),
+          isRefrshing == true
+              ? const SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.black,
+                    ),
+                  ),
+                )
+              : const NewsListViewBuilder(categoryName: "Top"),
+        ],
+      ),
+      isSearching == true
+          ? const Positioned(
+              left: 0,
+              right: -2,
+              top: 8,
+              child: CustomSearchBar(),
+            )
+          : const SizedBox(
+              height: 8,
+            ),
+    ]);
   }
 }
